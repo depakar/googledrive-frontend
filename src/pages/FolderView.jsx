@@ -84,8 +84,12 @@ export default function FolderView() {
      FILE ACTIONS
   ====================== */
   const handlePreview = (file) => {
-    window.open(`/preview/${file._id}`, "_blank");
-  };
+  window.open(
+    `${window.location.origin}/preview/${file._id}`,
+    "_blank"
+  );
+};
+
 
   const handleDownload = async (file) => {
     const blob = await downloadFileApi(file._id);

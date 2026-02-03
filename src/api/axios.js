@@ -19,7 +19,7 @@ instance.interceptors.response.use(
     if (error.response?.status === 401) {
       toast.error("Session expired. Please login again.");
 
-      // 🔥 USE AUTH CONTEXT LOGOUT
+      // 🔥 global logout hook
       if (window.__LOGOUT__) {
         window.__LOGOUT__();
       }
