@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { loginApi } from "../api/auth.api";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -11,7 +11,37 @@ export default function Login() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  /* ===============================
+     HANDLE REDIRECT MESSAGES
+  =============================== */
+  useEffect(() => {
+    const success = searchParams.get("success");
+    const error = searchParams.get("error");
+
+    if (success === "activated") {
+      toast.success("Account activated! You can now login.");
+      searchParams.delete("success");
+      setSearchParams(searchParams, { replace: true });
+    }
+
+    if (error === "invalid-link") {
+      toast.error("Invalid or expired activation link.");
+      searchParams.delete("error");
+      setSearchParams(searchParams, { replace: true });
+    }
+
+    if (error === "user-not-found") {
+      toast.error("User not found. Please register again.");
+      searchParams.delete("error");
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
+  /* ===============================
+     LOGIN SUBMIT
+  =============================== */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,7 +100,7 @@ export default function Login() {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* 🔹 EXTRA LINKS (MANDATORY) */}
+        {/* EXTRA LINKS */}
         <div className="flex justify-between mt-4 text-sm">
           <Link
             to="/register"
