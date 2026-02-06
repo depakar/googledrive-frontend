@@ -9,9 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import FilePreviewPage from "./pages/FilePreviewPage";
 
-
-
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,7 +18,10 @@ export default function App() {
         {/* PUBLIC ROUTES */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/activate/:token" element={<Activate />} />
+        
+        {/* ✅ CHANGED: /activate → /verify */}
+        <Route path="/verify/:token" element={<Activate />} />
+        
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/reset-password/:token"
