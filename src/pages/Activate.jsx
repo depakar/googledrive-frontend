@@ -8,7 +8,7 @@ export default function Activate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const activateAccount = async () => {
+    const activate = async () => {
       try {
         await axios.get(`/auth/verify/${token}`);
         toast.success("Account activated! You can now login.");
@@ -19,7 +19,7 @@ export default function Activate() {
       }
     };
 
-    activateAccount();
+    activate();
   }, [token, navigate]);
 
   return (
